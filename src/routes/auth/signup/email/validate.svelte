@@ -1,10 +1,10 @@
 <script>
 	import { urlConstants } from '../../../../helper/urlConstants';
-	import { AuthStore, dispatch } from '../../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../../store/authStore.js';
 	import { goto } from '$app/navigation';
 	import { verifyEmailAction, validateEmailAction } from '../../../../store/actions/signInActions';
 	import EmailSignUpValidate from '../../../../components/auth/emailSignUpValidate.svelte';
-	import AuthLayoutContainer from '../../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../../helper/storageHelper';
 	import { onMount } from 'svelte';
 
@@ -25,7 +25,7 @@
 			const responseData = await validateEmailAction(
 				code,
 				$AuthStore.bearerToken.tokenValue,
-				dispatch
+				authDispatch
 			);
 
 			if (responseData && !responseData.inError) {

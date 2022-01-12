@@ -1,10 +1,10 @@
 <script>
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, dispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/authStore.js';
 	import { goto } from '$app/navigation';
 	import { performAction } from '../../../store/actions/passwordResetActions';
 	import PasswordResetPerform from '../../../components/auth/passwordResetPerform.svelte';
-	import AuthLayoutContainer from '../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
 	import { onMount } from 'svelte';
 
@@ -22,7 +22,7 @@
 		const responseData = await performAction(
 			newPassword,
 			confirmPassword,
-			dispatch,
+			authDispatch,
 			$AuthStore.additionalData,
 			$AuthStore.bearerToken.tokenValue
 		);

@@ -1,11 +1,11 @@
 <script>
 	import { getClientDetails } from '../../../../helper/clientDetails';
 	import { urlConstants } from '../../../../helper/urlConstants';
-	import { AuthStore, dispatch } from '../../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../../store/authStore.js';
 	import { goto } from '$app/navigation';
 	import { signUpAction } from '../../../../store/actions/signInActions';
 	import EmailSignUp from '../../../../components/auth/emailSignUp.svelte';
-	import AuthLayoutContainer from '../../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../../helper/storageHelper';
 	import { onMount } from 'svelte';
 
@@ -17,7 +17,7 @@
 
 	const submitHandler = async ({ email, password }) => {
 		const clientDetails = await getClientDetails();
-		const responseData = await signUpAction(email, password, clientDetails, dispatch);
+		const responseData = await signUpAction(email, password, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError) {
 			if (responseData.tokenWrapper.authState.signupScope === 'FULL') {

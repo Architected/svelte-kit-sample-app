@@ -1,6 +1,6 @@
 <script>
-	import SubmitButton from '../../components/submitButton.svelte';
-	import MessagePanel from '../../components/messagePanel.svelte';
+	import AuthButton from '../../components/fields/authButton.svelte';
+	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import { createForm } from 'svelte-forms-lib';
 
 	export let submitHandler;
@@ -45,7 +45,7 @@
 				<p class="text-red-400 text-sm">{$errors.code}</p>
 			{/if}
 		</div>
-		<SubmitButton title="Verify" {callInProgress} />
+		<AuthButton title="Verify" {callInProgress} />
 		<MessagePanel {errorMessage} {warningMessage} />
 		<p class="text-sm">
 			<a href={'#'} on:click|preventDefault={resendHandler}>Resend Verification Code</a>

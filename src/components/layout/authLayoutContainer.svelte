@@ -1,10 +1,10 @@
 <script>
-	import { dispatch } from '../store/authStore.js';
-	import * as authActionType from '../store/constants/auth';
-	import SidePanel from './sidePanel.svelte';
+	import { authDispatch } from '../../store/authStore.js';
+	import * as authActionType from '../../store/constants/auth';
+	import SidePanel from '../sidePanel.svelte';
 	export let pageTitle;
 
-	dispatch({ type: authActionType.INIT_AUTH_LAYOUT });
+	authDispatch({ type: authActionType.INIT_AUTH_LAYOUT });
 </script>
 
 <svelte:head>

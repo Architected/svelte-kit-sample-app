@@ -1,11 +1,11 @@
 <script>
 	import { getClientDetails } from '../../../helper/clientDetails';
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, dispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/authStore.js';
 	import { goto } from '$app/navigation';
 	import { startAction } from '../../../store/actions/passwordResetActions';
 	import PasswordResetStart from '../../../components/auth/passwordResetStart.svelte';
-	import AuthLayoutContainer from '../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
 	import { onMount } from 'svelte';
 
@@ -17,7 +17,7 @@
 
 	const submitHandler = async ({ email }) => {
 		const clientDetails = await getClientDetails();
-		const responseData = await startAction(email, clientDetails, dispatch);
+		const responseData = await startAction(email, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError && responseData.tokenWrapper) {
 			goto(urlConstants.get('PASSWORD_RESET_VALIDATE'), true);

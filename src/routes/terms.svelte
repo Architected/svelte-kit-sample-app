@@ -23,7 +23,7 @@
 </script>
 
 <script>
-	import ContentLayoutContainer from '../components/contentLayoutContainer.svelte';
+	import ContentLayoutContainer from '../components/layout/contentLayoutContainer.svelte';
 
 	export let pageTitle;
 	export let htmlContent;

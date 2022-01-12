@@ -1,6 +1,6 @@
 <script>
-	import SubmitButton from '../../components/submitButton.svelte';
-	import MessagePanel from '../../components/messagePanel.svelte';
+	import AuthButton from '../../components/fields/authButton.svelte';
+	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import { createForm } from 'svelte-forms-lib';
 
 	export let submitHandler;
@@ -63,7 +63,7 @@
 				<p class="text-red-400 text-sm">{$errors.confirmPassword}</p>
 			{/if}
 		</div>
-		<SubmitButton title="Submit" {callInProgress} />
+		<AuthButton title="Submit" {callInProgress} />
 		<MessagePanel {errorMessage} {warningMessage} />
 	</form>
 </div>

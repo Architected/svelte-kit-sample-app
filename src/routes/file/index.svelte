@@ -1,31 +1,138 @@
 <script>
 	import { hasCompleteToken } from '../../helper/storageHelper';
-	import { AuthStore, dispatch } from '../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../store/authStore';
+	import { FileStore, fileDispatch } from '../../store/fileStore';
 	import { goto } from '$app/navigation';
 	import { urlConstants } from '../../helper/urlConstants';
+
 	import { onMount } from 'svelte';
+	import FileUploadModal from '../../components/file/fileUploadModal.svelte';
+	import FileListHeader from '../../components/file/fileListHeader.svelte';
+	import FileListGrid from '../../components/file/fileListGrid.svelte';
+	import * as fileActionType from '../../store/constants/file';
+	import {
+		downloadFileAction,
+		uploadFileAction,
+		getAllFilesAction,
+		validateFileBasic
+	} from '../../store/actions/fileActions';
+	import ModalContainer from '../../components/layout/modalContainer.svelte';
+	//import FileUpload from '../../components/file/fileUpload.svelte';
+	import MessagePanel from '../../components/fields/messagePanel.svelte';
+	import AuthButton from '../../components/fields/authButton.svelte';
+
+	const reloadHandler = async () => {
+		console.log('reloadHandler');
+		await getAllFilesAction(fileDispatch, $AuthStore.bearerToken.tokenValue);
+	};
 
 	onMount(() => {
-		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, dispatch)) {
+		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
 			goto(urlConstants.get('SIGNOUT'), true);
 		}
 	});
+
+	const initModal = () => {
+		fileDispatch({ type: fileActionType.SHOW_MODAL, payload: 'Upload File' });
+	};
+
+	const hideModal = () => {
+		fileDispatch({ type: fileActionType.HIDE_MODAL });
+	};
+
+	const launchCreateFile = (e) => {
+		e.preventDefault();
+		initModal();
+		reset();
+	};
+
+	let currentFile;
+	let previewUrl;
+
+	const previewFile = async (e) => {
+		const file = e.target.files[0];
+		if (!file) return;
+
+		const fileSize = file.size;
+		const fileType = file.type;
+		const validFile = validateFileBasic(fileSize, fileType, fileDispatch);
+
+		if (!validFile) return;
+
+		currentFile = e.target.files[0];
+		previewUrl = URL.createObjectURL(file);
+		console.log('previewUrl' + previewUrl);
+		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: previewUrl });
+	};
+
+	const createFile = (e) => {
+		const data = {
+			file: currentFile,
+			name: '',
+			description: ''
+		};
+		uploadFileAction(data, fileDispatch, $AuthStore.bearerToken.tokenValue);
+		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
+	};
+
+	const downloadFileHandler = async (fileGlobalId, fileName) => {
+		console.log('fileGlobalId' + fileGlobalId);
+		return downloadFileAction(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
+	};
+
+	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
+		reloadHandler();
+	}
 </script>
 
-<div class="w-full overflow-x-hidden flex flex-col">
-	<main class="w-full flex-grow p-6">
-		<div class="flex justify-between">
-			<div class="flex space-x-4">
-				<h2 class="font-bold text-3xl mt-1 px-2 mb-5">My Files</h2>
+<div class="w-full flex flex-col p-5">
+	<FileListHeader reloadList={reloadHandler} {launchCreateFile} />
+	<FileListGrid
+		isLoadingList={$FileStore.isLoadingList}
+		loadingError={$FileStore.loadingError}
+		files={$FileStore.files}
+		downloadFile={downloadFileHandler}
+	/>
+
+	<ModalContainer
+		id="file-upload"
+		displayModal={$FileStore.displayModal}
+		modalTitle={$FileStore.modalTitle}
+		handleClose={hideModal}
+	>
+		<form on:submit|preventDefault={createFile}>
+			<div class="mb-4 flex flex-col sm:flex-row align-middle">
+				<div class="flex flex-col">
+					<input
+						class="border rounded w-full py-2 px-3 w-96 align-middle"
+						type="file"
+						id="fred"
+						placeholder=""
+						on:change={previewFile}
+					/>
+				</div>
 			</div>
-			<div class="flex items-center space-x-1">
-				<div>[refresh]</div>
-				<div>[upload]</div>
-			</div>
-		</div>
-		<div>
-			<p class="px-2">Todo: Add file upload</p>
-			<p class="px-2">Todo: Add file list</p>
-		</div>
-	</main>
+			{#if $FileStore.previewUrl}
+				<div class="mb-4 flex flex-col sm:flex-row align-middle">
+					<div class="flex flex-col">
+						<img src={$FileStore.previewUrl} width="380" alt="preview" />
+					</div>
+				</div>
+			{/if}
+			<MessagePanel errorMessage={$FileStore.saveFileError} warningMessage="" />
+			{#if $FileStore.previewUrl}
+				<div class="flex mb-4">
+					<AuthButton title="Upload" callInProgress={$FileStore.isSavingFile} width="w-96" />
+				</div>
+			{/if}
+		</form>
+	</ModalContainer>
 </div>
+
+<!-- <FileUpload
+			saveFile={uploadHandler}
+			isSavingFile={$FileStore.isSavingFile}
+			saveFileError={$FileStore.saveFileError}
+			{previewFile}
+			previewUrl={$FileStore.previewUrl}
+		/> -->

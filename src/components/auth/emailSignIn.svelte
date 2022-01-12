@@ -1,8 +1,8 @@
 <script>
-	import SubmitButton from '../../components/submitButton.svelte';
-	import MessagePanel from '../../components/messagePanel.svelte';
+	import AuthButton from '../../components/fields/authButton.svelte';
+	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import { createForm } from 'svelte-forms-lib';
-	import FormField from '../formField.svelte';
+	import FormField from '../fields/formField.svelte';
 
 	export let submitHandler;
 	export let callInProgress;
@@ -49,7 +49,7 @@
 			value={$form.password}
 			error={$errors.password}
 		/>
-		<SubmitButton title="Sign In" {callInProgress} />
+		<AuthButton title="Sign In" {callInProgress} />
 		<MessagePanel {errorMessage} {warningMessage} />
 		<p class="text-sm mb-4">
 			Forgotten Password?&nbsp;<a href="/auth/password-reset/start">Click here</a>

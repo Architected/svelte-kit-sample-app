@@ -1,5 +1,5 @@
 <script>
-	import { architectedConfig } from '../architectedConfig';
+	import { architectedConfig } from '../../architectedConfig';
 	const year = new Date().getFullYear();
 </script>
 

@@ -3,10 +3,10 @@
 	import { urlConstants } from '../../../../helper/urlConstants';
 	import { nextStep } from '../../../../helper/scopeHelper';
 	import { saveToStore, hasCompleteToken } from '../../../../helper/storageHelper';
-	import { AuthStore, dispatch } from '../../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../../store/authStore.js';
 	import { signInAction } from '../../../../store/actions/signInActions';
 	import EmailSignIn from '../../../../components/auth/emailSignIn.svelte';
-	import AuthLayoutContainer from '../../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 
@@ -18,7 +18,7 @@
 
 	const submitHandler = async ({ email, password }) => {
 		const clientDetails = await getClientDetails();
-		const responseData = await signInAction(email, password, clientDetails, dispatch);
+		const responseData = await signInAction(email, password, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError) {
 			saveToStore('_tokenWrapper', responseData.tokenWrapper);

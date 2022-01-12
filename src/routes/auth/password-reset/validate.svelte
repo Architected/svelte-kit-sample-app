@@ -1,10 +1,10 @@
 <script>
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, dispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/authStore.js';
 	import { goto } from '$app/navigation';
 	import { validateAction } from '../../../store/actions/passwordResetActions';
 	import PasswordResetValidate from '../../../components/auth/passwordResetValidate.svelte';
-	import AuthLayoutContainer from '../../../components/authLayoutContainer.svelte';
+	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
 	import { onMount } from 'svelte';
 
@@ -19,7 +19,11 @@
 	});
 
 	const submitHandler = async ({ code }) => {
-		const responseData = await validateAction(code, dispatch, $AuthStore.bearerToken.tokenValue);
+		const responseData = await validateAction(
+			code,
+			authDispatch,
+			$AuthStore.bearerToken.tokenValue
+		);
 		console.log('responseData.inError' + responseData.inError);
 		if (responseData && !responseData.inError) {
 			console.log('PASSWORD_RESET_PERFORM:' + urlConstants.get('PASSWORD_RESET_PERFORM'));

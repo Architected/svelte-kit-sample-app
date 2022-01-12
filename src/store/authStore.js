@@ -14,7 +14,7 @@ const initialAuthState = {
 
 export const AuthStore = writable(initialAuthState);
 
-export const dispatch = (action) => {
+export const authDispatch = (action) => {
 	AuthStore.update((state) => {
 		return authReducer(state, action);
 	});
