@@ -7,10 +7,12 @@
 
 {#if $AuthStore.authState && $AuthStore.authState.signinScope === 'COMPLETE'}
 	<TopNav />
-	<main class="flex flex-row h-screen">
-		<LeftNav />
-		<slot />
-	</main>
+	<div class="flex">
+		<aside class="h-screen sticky top-0"><LeftNav /></aside>
+		<main class="w-screen">
+			<slot />
+		</main>
+	</div>
 {/if}
 {#if !$AuthStore.authState || $AuthStore.authState.signinScope !== 'COMPLETE'}
 	<div>

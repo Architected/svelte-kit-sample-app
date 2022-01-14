@@ -24,15 +24,13 @@
 	"type": "module",
 	"dependencies": {
 		"@fortawesome/free-solid-svg-icons": "^5.15.4",
-		"architected-client": "^1.0.1-beta.3",
+		"architected-client": "^1.0.3",
 		"axios": "^0.24.0",
-		"crypto-js": "^4.1.1",
 		"dotenv": "^10.0.0",
 		"js-file-download": "^0.4.12",
 		"moment": "^2.29.1",
 		"public-ip": "^5.0.0",
 		"svelte-fa": "^2.4.0",
-		"svelte-forms-lib": "^2.0.0",
-		"uuid-tool": "^2.0.3"
+		"svelte-forms-lib": "^2.0.0"
 	}
 }

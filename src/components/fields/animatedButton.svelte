@@ -4,7 +4,7 @@
 
 <button
 	type="button"
-	class={`inline-flex justify-center px-4 py-3 font-semibold leading-6 ${width} text-sm shadow rounded-md text-white bg-black hover:bg-gray-800 transition ease-in-out duration-150 cursor-not-allowed`}
+	class={`inline-flex justify-center px-4 py-3 font-semibold leading-6 ${width} text-sm shadow rounded text-white bg-black hover:bg-gray-800 transition ease-in-out duration-150 cursor-not-allowed`}
 	disabled="true"
 >
 	<svg

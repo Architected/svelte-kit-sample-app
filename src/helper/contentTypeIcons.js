@@ -49,16 +49,17 @@ const contentTypeIcons = {
 	'application/xml': FILE_DATABASE
 };
 
-const svelteContentTypeMapping = {
-	FILE_AUDIO: faFileAudio,
-	FILE_IMAGE: faFileImage,
-	FILE_VIDEO: faFileVideo,
-	FILE_PDF: faFilePdf,
-	FILE_POWERPOINT: faFilePowerpoint,
-	FILE_WORD: faFileWord,
-	FILE_EXCEL: faFileExcel,
-	FILE_ALT: faFileAlt,
-	FILE_TABLE: faTable,
-	FILE_DATABASE: faDatabase
+const getGroupIcon = (contentTypeGroup) => {
+	if (contentTypeGroup == FILE_AUDIO) return faFileAudio;
+	if (contentTypeGroup == FILE_IMAGE) return faFileImage;
+	if (contentTypeGroup == FILE_VIDEO) return faFileVideo;
+	if (contentTypeGroup == FILE_PDF) return faFilePdf;
+	if (contentTypeGroup == FILE_POWERPOINT) return faFilePowerpoint;
+	if (contentTypeGroup == FILE_WORD) return faFileWord;
+	if (contentTypeGroup == FILE_EXCEL) return faFileExcel;
+	if (contentTypeGroup == FILE_ALT) return faFileAlt;
+	if (contentTypeGroup == FILE_TABLE) return faTable;
+	if (contentTypeGroup == FILE_DATABASE) return faDatabase;
 };
-export { contentTypeIcons, svelteContentTypeMapping };
+
+export { contentTypeIcons, getGroupIcon };

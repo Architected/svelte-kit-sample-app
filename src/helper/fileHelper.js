@@ -37,6 +37,7 @@ const getIcon = (contentType) => {
 const isProcessing = (fileStatus) => fileStatus == 'PROCESSING';
 const isProcessed = (fileStatus) => fileStatus == 'PROCESSED';
 const isScanFailed = (fileStatus) => fileStatus == 'SCANFAILED';
+const isFileError = (fileStatus) => fileStatus == 'ERROR';
 
 export {
 	getFileSize,
@@ -45,5 +46,6 @@ export {
 	isProcessing,
 	isProcessed,
 	isScanFailed,
+	isFileError,
 	getGridDisplayName
 };

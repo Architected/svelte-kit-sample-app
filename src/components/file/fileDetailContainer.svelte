@@ -78,7 +78,7 @@
 	});
 </script>
 
-<div class="px-5" bind:this={root}>
+<div class="h-screen px-5" bind:this={root}>
 	{#if isLoadingItem}
 		<div class="px-4 py-3 leading-normal text-blue-700 bg-blue-100 rounded-lg">
 			<p>Loading file ...</p>
@@ -90,31 +90,34 @@
 		</div>
 	{/if}
 	<!-- {#if file} -->
-	<div class={isReady ? '' : 'hidden'}>
+	<div class={`${isReady ? '' : 'hidden'} border-2`}>
 		<div class="bg-white">
 			<nav class="tabs flex flex-col sm:flex-row">
 				<button
 					data-target="panel-1"
 					class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none active"
 				>
-					Details
+					Thumbnail
 				</button>
 				<button
 					data-target="panel-2"
 					class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
 				>
-					Attributes
+					Details
 				</button>
 				<button
 					data-target="panel-3"
 					class="tab text-gray-600 py-4 px-6 block hover:text-blue-500 focus:outline-none"
 				>
-					Thumbnail
+					Attributes
 				</button>
 			</nav>
 		</div>
 		<div id="panels" class="bg-white">
 			<div class="panel-1 tab-content p-5 active">
+				<FileDetailThumbnail {file} />
+			</div>
+			<div class="panel-2 tab-content p-5">
 				<FileDetailMain
 					{file}
 					{updateFile}
@@ -125,11 +128,8 @@
 					{deletingError}
 				/>
 			</div>
-			<div class="panel-2 tab-content p-5">
-				<FileDetailAttribute />
-			</div>
 			<div class="panel-3 tab-content p-5">
-				<FileDetailThumbnail />
+				<FileDetailAttribute {file} />
 			</div>
 		</div>
 	</div>

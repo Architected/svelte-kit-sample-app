@@ -35,25 +35,34 @@
 	};
 
 	const deleteFileHandler = async () => {
-		await deleteFileAction(
+		const response = await deleteFileAction(
 			$FileStore.file.globalId,
 			fileDispatch,
 			$AuthStore.bearerToken.tokenValue
 		);
+
+		if (!response.inError) {
+			goto(urlConstants.get('PAGE_FILE_LIST'));
+		}
 		return goto(urlConstants.get('PAGE_FILE_LIST'));
 	};
 
 	const updateFileHandler = async (data) => {
-		console.log('updateFileHandler:' + JSON.stringify(data));
 		var fileUpdateRequest = {
 			globalId: fileId,
 			name: data.name,
 			description: data.description
 		};
 
-		await updateFileAction(fileUpdateRequest, fileDispatch, $AuthStore.bearerToken.tokenValue);
+		const response = await updateFileAction(
+			fileUpdateRequest,
+			fileDispatch,
+			$AuthStore.bearerToken.tokenValue
+		);
 
-		goto(urlConstants.get('PAGE_FILE_LIST'));
+		if (!response.inError) {
+			goto(urlConstants.get('PAGE_FILE_LIST'));
+		}
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
@@ -63,7 +72,7 @@
 	}
 </script>
 
-<div class="w-full flex flex-col p-5  bg-gray-100">
+<div class="w-full flex flex-col px-5">
 	<div class="w-full flex flex-row justify-between p-5">
 		<div class="flex space-x-4">
 			<h2 class="font-bold text-3xl">File Detail</h2>
@@ -71,7 +80,7 @@
 		<div class="flex">
 			<div class="mt-2">
 				<a
-					class="bg-black text-white text-sm py-2 px-4 rounded-lg"
+					class="bg-black text-white text-sm py-2 px-4 rounded"
 					href={urlConstants.get('PAGE_FILE_LIST')}
 				>
 					Back to file list

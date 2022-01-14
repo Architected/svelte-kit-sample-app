@@ -5,7 +5,7 @@
 	</h2>
 	<p class="text-lg text-center lg:text-left mb-6">Storage for your favourite digital assets</p>
 	<div class="flex justify-center flex-wrap gap-6 mb-6">
-		<a class="bg-black text-white py-2 px-4 rounded-lg" href="/auth/signin/email">Sign In</a>
+		<a class="bg-black text-white py-2 px-4 rounded" href="/auth/signin/email">Sign In</a>
 	</div>
 	<div class="flex justify-center flex-wrap gap-2 text-sm ">
 		Don't have an account?<a href="/auth/signup/email">Sign up</a>

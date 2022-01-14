@@ -20,6 +20,7 @@
 	//import FileUpload from '../../components/file/fileUpload.svelte';
 	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import AuthButton from '../../components/fields/authButton.svelte';
+	import { get_root_for_style } from 'svelte/internal';
 
 	const reloadHandler = async () => {
 		console.log('reloadHandler');
@@ -38,6 +39,8 @@
 
 	const hideModal = () => {
 		fileDispatch({ type: fileActionType.HIDE_MODAL });
+		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
+		resetFileInput();
 	};
 
 	const launchCreateFile = (e) => {
@@ -48,7 +51,7 @@
 
 	let currentFile;
 	let previewUrl;
-
+	let root;
 	const previewFile = async (e) => {
 		const file = e.target.files[0];
 		if (!file) return;
@@ -65,14 +68,25 @@
 		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: previewUrl });
 	};
 
+	const resetFileInput = () => {
+		var fileInput = root.querySelector('#file');
+		if (fileInput) {
+			fileInput.value = '';
+		}
+	};
+
 	const createFile = (e) => {
 		const data = {
-			file: currentFile,
-			name: '',
-			description: ''
+			file: currentFile
 		};
-		uploadFileAction(data, fileDispatch, $AuthStore.bearerToken.tokenValue);
-		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
+
+		uploadFileAction(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
+			fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
+			resetFileInput();
+			var fileInput = root.reloadHandler().then(() => {
+				console.log('files reloaded after update');
+			});
+		});
 	};
 
 	const downloadFileHandler = async (fileGlobalId, fileName) => {
@@ -85,7 +99,7 @@
 	}
 </script>
 
-<div class="w-full flex flex-col p-5">
+<div class="flex flex-col p-5" bind:this={root}>
 	<FileListHeader reloadList={reloadHandler} {launchCreateFile} />
 	<FileListGrid
 		isLoadingList={$FileStore.isLoadingList}
@@ -106,7 +120,7 @@
 					<input
 						class="border rounded w-full py-2 px-3 w-96 align-middle"
 						type="file"
-						id="fred"
+						id="file"
 						placeholder=""
 						on:change={previewFile}
 					/>
@@ -120,7 +134,7 @@
 				</div>
 			{/if}
 			<MessagePanel errorMessage={$FileStore.saveFileError} warningMessage="" />
-			{#if $FileStore.previewUrl}
+			{#if $FileStore.previewUrl || $FileStore.isSavingFile}
 				<div class="flex mb-4">
 					<AuthButton title="Upload" callInProgress={$FileStore.isSavingFile} width="w-96" />
 				</div>

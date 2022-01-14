@@ -44,12 +44,12 @@
 
 <!-- navbar -->
 <nav class="border-b-2 border-gray-100" bind:this={root}>
-	<div class="mx-auto px-4">
+	<div class="mx-auto px-10">
 		<div class="flex justify-between">
 			<!-- top left hand side nav -->
 			<div class="flex space-x-4">
 				<div>
-					<a href="/" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
+					<a href="/" class="flex items-center py-5 text-gray-700 hover:text-gray-900">
 						<span class="font-bold"
 							>{architectedConfig.siteName}
 							{architectedConfig.appEnv != 'prod' ? ` - [${architectedConfig.appEnv}]` : ''}</span

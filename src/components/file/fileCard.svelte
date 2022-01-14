@@ -10,15 +10,16 @@
 		isProcessing,
 		isProcessed,
 		isScanFailed,
+		isFileError,
 		getGridDisplayName
 	} from '../../helper/fileHelper';
 	import moment from 'moment';
-	import { contentTypeIcons, svelteContentTypeMapping } from '../../helper/contentTypeIcons';
+	import { contentTypeIcons, getGroupIcon } from '../../helper/contentTypeIcons';
 </script>
 
 <div class="flex">
 	<div class="flex-1">
-		<div class="max-w-sm bg-white ring-1 ring-gray-700 ring-opacity-5 shadow-lg rounded-md">
+		<div class="bg-white ring-1 ring-gray-700 ring-opacity-5 shadow-lg rounded">
 			<a href={`/file/${file.globalId}`}>
 				{#if file.hasThumbnail}
 					<img
@@ -28,7 +29,15 @@
 					/>
 				{/if}
 				{#if !file.hasThumbnail}
-					<i class={svelteContentTypeMapping[contentTypeIcons[file.contentType]]} />
+					<div class="flex items-center p-7">
+						<div class="w-full text-center">
+							<Fa
+								class="inline-block"
+								icon={getGroupIcon(contentTypeIcons[file.contentType])}
+								size="20x"
+							/>
+						</div>
+					</div>
 				{/if}
 			</a>
 			<div class="px-6 py-4">
@@ -66,6 +75,12 @@
 							<span
 								class="inline-flex items-center justify-center px-2 py-2 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
 								>Scan Failed</span
+							>
+						{/if}
+						{#if isFileError(file.fileStatus)}
+							<span
+								class="inline-flex items-center justify-center px-2 py-2 mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
+								>Error</span
 							>
 						{/if}
 					</div>

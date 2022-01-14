@@ -14,7 +14,7 @@ export const validateFileBasic = (fileSize, fileType, dispatch) => {
 	if (!architectedConfig.maxFileSizeMB || fileSize > architectedConfig.maxFileSizeMB * 1000000) {
 		dispatch({
 			type: fileActionType.FILE_CREATE_FAIL,
-			payload: 'File is too big! Max Size:' + architectedConfig.maxFileSizeMB + ' MB'
+			payload: 'File is too big! Max Size is:' + architectedConfig.maxFileSizeMB + ' MB'
 		});
 		return false;
 	}
@@ -110,7 +110,7 @@ export const getFileAction = async (fileId, dispatch, tokenValue) => {
 		var frontChannel = frontChannelService();
 		const { data } = await frontChannel.file().getFile(fileId, tokenValue);
 
-		if (!data.InError) {
+		if (!data.inError) {
 			dispatch({
 				type: fileActionType.FILE_FETCH_SUCCESS,
 				payload: {
@@ -139,9 +139,21 @@ export const deleteFileAction = async (fileId, dispatch, tokenValue) => {
 
 	try {
 		var frontChannel = frontChannelService();
-		await frontChannel.file().deleteFile(fileId, tokenValue);
+		const { data } = await frontChannel.file().deleteFile(fileId, tokenValue);
 
-		dispatch({ type: fileActionType.FILE_DELETE_SUCCESS });
+		if (!data.inError) {
+			dispatch({
+				type: fileActionType.FILE_DELETE_SUCCESS,
+				payload: null
+			});
+		} else {
+			dispatch({
+				type: fileActionType.FILE_DELETE_FAIL,
+				payload: data.errorMessage
+			});
+		}
+
+		return data;
 	} catch (err) {
 		dispatch({
 			type: fileActionType.FILE_DELETE_FAIL,
@@ -154,15 +166,24 @@ export const updateFileAction = async (requestData, dispatch, tokenValue) => {
 	try {
 		dispatch({ type: fileActionType.FILE_UPDATE_REQUEST });
 
-		console.log('calling update file record');
-
 		var frontChannel = frontChannelService();
-		await frontChannel.file().updateFile(requestData.globalId, requestData, tokenValue);
+		const { data } = await frontChannel
+			.file()
+			.updateFile(requestData.globalId, requestData, tokenValue);
 
-		console.log('file update success');
-		dispatch({
-			type: fileActionType.FILE_UPDATE_SUCCESS
-		});
+		if (!data.inError) {
+			dispatch({
+				type: fileActionType.FILE_UPDATE_SUCCESS,
+				payload: null
+			});
+		} else {
+			dispatch({
+				type: fileActionType.FILE_UPDATE_FAIL,
+				payload: data.errorMessage
+			});
+		}
+
+		return data;
 	} catch (err) {
 		console.log(err.toString());
 		dispatch({
