@@ -1,5 +1,5 @@
 <script>
-	import { getFileSize } from 'architected-client/helper/fileHelper';
+	import { getFileSize } from 'architected-client/helper/fileHelper.js';
 
 	export let file;
 </script>

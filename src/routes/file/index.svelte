@@ -8,7 +8,7 @@
 	//import FileUploadModal from '../../components/file/fileUploadModal.svelte';
 	import FileListHeader from '../../components/file/fileListHeader.svelte';
 	import FileListGrid from '../../components/file/fileListGrid.svelte';
-	import * as fileActionType from 'architected-client/constants/file';
+	import * as fileActionType from 'architected-client/constants/file.js';
 	import { fileService } from '../../service/setup';
 	import ModalContainer from '../../components/layout/modalContainer.svelte';
 	//import FileUpload from '../../components/file/fileUpload.svelte';

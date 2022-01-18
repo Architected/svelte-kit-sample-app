@@ -1,8 +1,8 @@
 <script>
 	export let file;
 	import Fa from 'svelte-fa';
-	import { getDisplayName } from 'architected-client/helper/fileHelper';
-	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper';
+	import { getDisplayName } from 'architected-client/helper/fileHelper.js';
+	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper.js';
 	import { getGroupIcon } from '../../helper/contentTypeIcons';
 </script>
 

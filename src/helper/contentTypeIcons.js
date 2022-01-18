@@ -10,7 +10,7 @@ import {
 	faTable,
 	faDatabase
 } from '@fortawesome/free-solid-svg-icons';
-import * as mimeTypeHelper from 'architected-client/helper/mimeTypeHelper';
+import * as mimeTypeHelper from 'architected-client/helper/mimeTypeHelper.js';
 
 const getGroupIcon = (contentTypeGroup) => {
 	if (contentTypeGroup == mimeTypeHelper.FILE_AUDIO) return faFileAudio;

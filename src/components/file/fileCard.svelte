@@ -12,10 +12,10 @@
 		isScanFailed,
 		isFileError,
 		getGridDisplayName
-	} from 'architected-client/helper/fileHelper';
+	} from 'architected-client/helper/fileHelper.js';
 	import moment from 'moment';
 	import { getGroupIcon } from '../../helper/contentTypeIcons';
-	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper';
+	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper.js';
 </script>
 
 <div class="flex">
