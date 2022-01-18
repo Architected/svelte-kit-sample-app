@@ -1,8 +1,8 @@
 <script>
 	import FormField from '../fields/formField.svelte';
 	import MessagePanel from '../fields/messagePanel.svelte';
-	import AuthButton from '../fields/AuthButton.svelte';
 	import { createForm } from 'svelte-forms-lib';
+	import AuthButton from '../fields/authButton.svelte';
 
 	export let file,
 		updateFile,

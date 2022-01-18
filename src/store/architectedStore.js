@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
-import { authReducer, initialAuthState } from 'architected-client/reducers/iam';
-import { fileReducer, initialFileState } from 'architected-client/reducers/file';
-import { profileReducer, initialProfileState } from 'architected-client/reducers/profile';
+import { authReducer, initialAuthState } from 'architected-client/reducers/iam.js';
+import { fileReducer, initialFileState } from 'architected-client/reducers/file.js';
+import { profileReducer, initialProfileState } from 'architected-client/reducers/profile.js';
 
 export const AuthStore = writable(initialAuthState);
 export const FileStore = writable(initialFileState);

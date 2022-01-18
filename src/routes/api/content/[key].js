@@ -1,5 +1,5 @@
-import { contentService } from '../../../service/setup';
-import { unexpectedError } from 'architected-client/helper/unexpectedError';
+import { contentService } from '../../../service/setup.js';
+import { unexpectedError } from 'architected-client/helper/unexpectedError.js';
 import dotenv from 'dotenv';
 
 export async function get({ params }) {

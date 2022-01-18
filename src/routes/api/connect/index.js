@@ -1,5 +1,5 @@
-import { unexpectedError } from 'architected-client/helper/unexpectedError';
-import { connectService } from '../../../service/setup';
+import { unexpectedError } from 'architected-client/helper/unexpectedError.js';
+import { connectService } from '../../../service/setup.js';
 import dotenv from 'dotenv';
 export async function post(request) {
 	try {
