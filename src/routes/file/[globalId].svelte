@@ -1,26 +1,21 @@
 <script context="module">
 	export async function load(ctx) {
 		let fileId = ctx.params.globalId;
-		console.log(fileId);
+		console.log('fileId:' + fileId);
 		return { props: { fileId } };
 	}
 </script>
 
 <script>
 	import { hasCompleteToken } from '../../helper/storageHelper';
-	import { AuthStore, authDispatch } from '../../store/authStore';
-	import { FileStore, fileDispatch } from '../../store/fileStore';
+	import { AuthStore, authDispatch, FileStore, fileDispatch } from '../../store/architectedStore';
 	import { goto } from '$app/navigation';
 	import { urlConstants } from '../../helper/urlConstants';
 
 	import FileDetailContainer from '../../components/file/fileDetailContainer.svelte';
 
 	import { onMount } from 'svelte';
-	import {
-		getFileAction,
-		deleteFileAction,
-		updateFileAction
-	} from '../../store/actions/fileActions';
+	import { fileService } from '../../service/setup';
 
 	export let fileId;
 
@@ -31,11 +26,11 @@
 	});
 
 	const retrieveData = async () => {
-		await getFileAction(fileId, fileDispatch, $AuthStore.bearerToken.tokenValue);
+		await fileService.getFile(fileId, fileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	const deleteFileHandler = async () => {
-		const response = await deleteFileAction(
+		const response = await fileService.deleteFile(
 			$FileStore.file.globalId,
 			fileDispatch,
 			$AuthStore.bearerToken.tokenValue
@@ -54,7 +49,7 @@
 			description: data.description
 		};
 
-		const response = await updateFileAction(
+		const response = await fileService.updateFile(
 			fileUpdateRequest,
 			fileDispatch,
 			$AuthStore.bearerToken.tokenValue
@@ -66,9 +61,7 @@
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
-		retrieveData().then(() => {
-			console.log(JSON.stringify($FileStore.file));
-		});
+		retrieveData().then(() => {});
 	}
 </script>
 

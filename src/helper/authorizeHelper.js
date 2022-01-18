@@ -3,8 +3,6 @@ import axios from 'axios';
 const startAuthorize = async (codeVerifier, clientDetails) => {
 	const { ipAddress, userAgent } = clientDetails;
 
-	console.log('calling connect authorize');
-
 	var request = {
 		codeVerifier: codeVerifier,
 		ipAddress: ipAddress,

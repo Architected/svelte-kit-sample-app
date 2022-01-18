@@ -1,8 +1,9 @@
 <script>
 	export let file;
 	import Fa from 'svelte-fa';
-	import { getDisplayName } from '../../helper/fileHelper';
-	import { contentTypeIcons, getGroupIcon } from '../../helper/contentTypeIcons';
+	import { getDisplayName } from 'architected-client/helper/fileHelper';
+	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper';
+	import { getGroupIcon } from '../../helper/contentTypeIcons';
 </script>
 
 <div class="bg-white">
@@ -22,7 +23,7 @@
 			<div class="w-full text-center">
 				<Fa
 					class="inline-block"
-					icon={getGroupIcon(contentTypeIcons[file.contentType])}
+					icon={getGroupIcon(mimeTypeMapping[file.contentType])}
 					size="10x"
 				/>
 			</div>

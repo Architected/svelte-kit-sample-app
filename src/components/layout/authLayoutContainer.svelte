@@ -1,6 +1,6 @@
 <script>
-	import { authDispatch } from '../../store/authStore.js';
-	import * as authActionType from '../../store/constants/auth';
+	import { authDispatch } from '../../store/architectedStore.js';
+	import * as authActionType from 'architected-client/constants/iam';
 	import SidePanel from '../sidePanel.svelte';
 	export let pageTitle;
 

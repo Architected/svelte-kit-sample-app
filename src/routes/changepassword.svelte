@@ -1,13 +1,50 @@
-<div class="w-full overflow-x-hidden flex flex-col">
-	<main class="w-full flex-grow p-6">
-		<div class="flex justify-between">
-			<div class="flex space-x-4">
-				<h2 class="font-bold text-3xl mt-1 px-2 mb-5">Change Password</h2>
-			</div>
-			<div class="flex items-center space-x-1" />
+<script>
+	import { hasCompleteToken } from '../helper/storageHelper';
+	import {
+		AuthStore,
+		authDispatch,
+		ProfileStore,
+		profileDispatch
+	} from '../store/architectedStore';
+	import { goto } from '$app/navigation';
+	import { urlConstants } from '../helper/urlConstants';
+	import { onMount } from 'svelte';
+	import AccountContainer from '../components/account/accountContainer.svelte';
+	import { profileService } from '../service/setup';
+
+	onMount(() => {
+		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
+			goto(urlConstants.get('SIGNOUT'), true);
+		}
+	});
+
+	const changePasswordHandler = async (data) => {
+		const responseData = await profileService.changePassword(
+			data.currentPassword,
+			data.newPassword,
+			profileDispatch,
+			$AuthStore.bearerToken.tokenValue
+		);
+
+		if (responseData.inError) {
+		}
+	};
+</script>
+
+<div class="w-full flex flex-col px-5">
+	<div class="w-full flex flex-row justify-between p-5">
+		<div class="flex space-x-4">
+			<h2 class="font-bold text-3xl">Account Settings</h2>
 		</div>
-		<div>
-			<p class="px-2">Todo: Change Password</p>
+		<div class="flex">
+			<div class="mt-2">&nbsp;</div>
 		</div>
-	</main>
+	</div>
+	<AccountContainer
+		changePassword={changePasswordHandler}
+		callInProgress={$ProfileStore.callInProgress}
+		warningMessage={$ProfileStore.warningMessage}
+		errorMessage={$ProfileStore.errorMessage}
+		successMessage={$ProfileStore.successMessage}
+	/>
 </div>

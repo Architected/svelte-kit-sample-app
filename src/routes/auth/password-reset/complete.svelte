@@ -1,6 +1,6 @@
 <script>
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore } from '../../../store/authStore';
+	import { AuthStore } from '../../../store/architectedStore';
 	import { goto } from '$app/navigation';
 	import PasswordResetComplete from '../../../components/auth/passwordResetComplete.svelte';
 	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';

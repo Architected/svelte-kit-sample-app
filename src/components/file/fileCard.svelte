@@ -12,9 +12,10 @@
 		isScanFailed,
 		isFileError,
 		getGridDisplayName
-	} from '../../helper/fileHelper';
+	} from 'architected-client/helper/fileHelper';
 	import moment from 'moment';
-	import { contentTypeIcons, getGroupIcon } from '../../helper/contentTypeIcons';
+	import { getGroupIcon } from '../../helper/contentTypeIcons';
+	import { mimeTypeMapping } from 'architected-client/helper/mimeTypeHelper';
 </script>
 
 <div class="flex">
@@ -33,7 +34,7 @@
 						<div class="w-full text-center">
 							<Fa
 								class="inline-block"
-								icon={getGroupIcon(contentTypeIcons[file.contentType])}
+								icon={getGroupIcon(mimeTypeMapping[file.contentType])}
 								size="20x"
 							/>
 						</div>

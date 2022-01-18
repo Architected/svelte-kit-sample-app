@@ -1,8 +1,8 @@
 <script>
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, authDispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { validateAction } from '../../../store/actions/passwordResetActions';
+	import { iamService } from '../../../service/setup';
 	import PasswordResetValidate from '../../../components/auth/passwordResetValidate.svelte';
 	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
@@ -19,14 +19,13 @@
 	});
 
 	const submitHandler = async ({ code }) => {
-		const responseData = await validateAction(
+		const responseData = await iamService.passwordResetValidate(
 			code,
 			authDispatch,
 			$AuthStore.bearerToken.tokenValue
 		);
-		console.log('responseData.inError' + responseData.inError);
+
 		if (responseData && !responseData.inError) {
-			console.log('PASSWORD_RESET_PERFORM:' + urlConstants.get('PASSWORD_RESET_PERFORM'));
 			goto(urlConstants.get('PASSWORD_RESET_PERFORM'), true);
 		}
 	};

@@ -1,9 +1,9 @@
 <script>
 	import { getClientDetails } from '../../../helper/clientDetails';
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, authDispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { startAction } from '../../../store/actions/passwordResetActions';
+	import { iamService } from '../../../service/setup';
 	import PasswordResetStart from '../../../components/auth/passwordResetStart.svelte';
 	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
@@ -17,7 +17,7 @@
 
 	const submitHandler = async ({ email }) => {
 		const clientDetails = await getClientDetails();
-		const responseData = await startAction(email, clientDetails, authDispatch);
+		const responseData = await iamService.passwordResetStart(email, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError && responseData.tokenWrapper) {
 			goto(urlConstants.get('PASSWORD_RESET_VALIDATE'), true);

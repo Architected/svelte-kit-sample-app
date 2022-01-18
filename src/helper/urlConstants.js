@@ -8,7 +8,6 @@ urlConstants.set('SIGNUP_ALTERNATEEMAIL', '/auth/signup/alternateemail');
 urlConstants.set('SIGNUP_COMPLETE', '/auth/signup/complete');
 urlConstants.set('SIGNUP_WALLET_CONNECT', '/auth/signup/wallet/connect');
 urlConstants.set('SIGNUP_WALLET_VALIDATE', '/auth/signup/wallet/validate');
-
 urlConstants.set('SIGNIN', '/auth/signin/email');
 urlConstants.set('SIGNIN_VERIFY_AUTHY', '/auth/signin/verify-authy');
 urlConstants.set('SIGNIN_VERIFY_ALTERNATEEMAIL', '/auth/signin/verify-alternate-email');

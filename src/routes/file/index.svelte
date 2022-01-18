@@ -1,30 +1,22 @@
 <script>
 	import { hasCompleteToken } from '../../helper/storageHelper';
-	import { AuthStore, authDispatch } from '../../store/authStore';
-	import { FileStore, fileDispatch } from '../../store/fileStore';
+	import { AuthStore, authDispatch, FileStore, fileDispatch } from '../../store/architectedStore';
 	import { goto } from '$app/navigation';
 	import { urlConstants } from '../../helper/urlConstants';
 
 	import { onMount } from 'svelte';
-	import FileUploadModal from '../../components/file/fileUploadModal.svelte';
+	//import FileUploadModal from '../../components/file/fileUploadModal.svelte';
 	import FileListHeader from '../../components/file/fileListHeader.svelte';
 	import FileListGrid from '../../components/file/fileListGrid.svelte';
-	import * as fileActionType from '../../store/constants/file';
-	import {
-		downloadFileAction,
-		uploadFileAction,
-		getAllFilesAction,
-		validateFileBasic
-	} from '../../store/actions/fileActions';
+	import * as fileActionType from 'architected-client/constants/file';
+	import { fileService } from '../../service/setup';
 	import ModalContainer from '../../components/layout/modalContainer.svelte';
 	//import FileUpload from '../../components/file/fileUpload.svelte';
 	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import AuthButton from '../../components/fields/authButton.svelte';
-	import { get_root_for_style } from 'svelte/internal';
 
 	const reloadHandler = async () => {
-		console.log('reloadHandler');
-		await getAllFilesAction(fileDispatch, $AuthStore.bearerToken.tokenValue);
+		await fileService.getAllFiles(fileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	onMount(() => {
@@ -46,19 +38,20 @@
 	const launchCreateFile = (e) => {
 		e.preventDefault();
 		initModal();
-		reset();
+		resetFileInput();
 	};
 
 	let currentFile;
 	let previewUrl;
 	let root;
+
 	const previewFile = async (e) => {
 		const file = e.target.files[0];
 		if (!file) return;
 
 		const fileSize = file.size;
 		const fileType = file.type;
-		const validFile = validateFileBasic(fileSize, fileType, fileDispatch);
+		const validFile = fileService.validateFileBasic(fileSize, fileType, fileDispatch);
 
 		if (!validFile) return;
 
@@ -80,18 +73,20 @@
 			file: currentFile
 		};
 
-		uploadFileAction(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
+		fileService.uploadFile(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
 			fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
 			resetFileInput();
-			var fileInput = root.reloadHandler().then(() => {
-				console.log('files reloaded after update');
-			});
+			// var fileInput = root.reloadHandler().then(() => {
+			// 	console.log('files reloaded after update');
+			// });
+
+			reloadHandler().then(() => {});
 		});
 	};
 
 	const downloadFileHandler = async (fileGlobalId, fileName) => {
 		console.log('fileGlobalId' + fileGlobalId);
-		return downloadFileAction(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
+		return fileService.downloadFile(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {

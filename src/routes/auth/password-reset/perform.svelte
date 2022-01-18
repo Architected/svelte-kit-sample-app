@@ -1,8 +1,8 @@
 <script>
 	import { urlConstants } from '../../../helper/urlConstants';
-	import { AuthStore, authDispatch } from '../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { performAction } from '../../../store/actions/passwordResetActions';
+	import { iamService } from '../../../service/setup';
 	import PasswordResetPerform from '../../../components/auth/passwordResetPerform.svelte';
 	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
@@ -19,7 +19,7 @@
 	});
 
 	const submitHandler = async ({ newPassword, confirmPassword }) => {
-		const responseData = await performAction(
+		const responseData = await iamService.passwordResetPerform(
 			newPassword,
 			confirmPassword,
 			authDispatch,

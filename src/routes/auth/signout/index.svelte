@@ -1,13 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
-	import { authDispatch } from '../../../store/authStore.js';
+	import { authDispatch } from '../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { signOutAction } from '../../../store/actions/signInActions';
+	import { iamService } from '../../../service/setup';
 	import { deleteFromStore } from '../../../helper/storageHelper';
 
 	onMount(() => {
 		deleteFromStore('_tokenWrapper');
-		signOutAction(authDispatch).then(() => {
+		iamService.signOut(authDispatch).then(() => {
 			console.log('signout complete');
 			goto('/', true);
 		});

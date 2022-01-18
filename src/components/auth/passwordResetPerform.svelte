@@ -9,9 +9,6 @@
 	export let warningMessage;
 
 	const { form, errors, state, handleChange, handleSubmit } = createForm({
-		initialValues: {
-			code: ''
-		},
 		validate: (values) => {
 			let errs = {};
 			if (values.newPassword === '') {

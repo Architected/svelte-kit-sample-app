@@ -1,6 +1,6 @@
 <script>
 	import { hasValidToken } from '../helper/storageHelper';
-	import { AuthStore, authDispatch } from '../store/authStore.js';
+	import { AuthStore, authDispatch } from '../store/architectedStore.js';
 	import { goto } from '$app/navigation';
 	import { urlConstants } from '../helper/urlConstants';
 	import HomeScreen from '../components/homeScreen.svelte';

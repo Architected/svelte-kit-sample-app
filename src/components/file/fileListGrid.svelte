@@ -20,7 +20,7 @@
 			<p>You have not uploaded any files yet!</p>
 		</div>
 	{/if}
-	<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 justify-between">
+	<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 justify-between">
 		{#if files && files.length > 0}
 			{#each files as file, i}
 				<FileContainer {file} {downloadFile} />

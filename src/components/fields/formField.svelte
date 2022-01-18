@@ -2,7 +2,7 @@
 	export let title,
 		id,
 		type,
-		placeholder,
+		placeholder = undefined,
 		handleChange,
 		value,
 		error,

@@ -1,7 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { architectedConfig } from '../../architectedConfig';
-	import { AuthStore } from '../../store/authStore.js';
+	import { AuthStore } from '../../store/architectedStore.js';
 	import Fa from 'svelte-fa';
 	import { faUserCircle, faBars, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 

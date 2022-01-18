@@ -1,4 +1,4 @@
-import * as authActionType from '../store/constants/auth';
+import * as authActionType from 'architected-client/constants/iam';
 
 const saveToStore = (key, value) => {
 	try {

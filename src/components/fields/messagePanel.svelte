@@ -1,6 +1,7 @@
 <script>
 	export let errorMessage;
 	export let warningMessage;
+	export let successMessage = undefined;
 </script>
 
 {#if errorMessage}
@@ -12,5 +13,18 @@
 	</div>
 {/if}
 {#if warningMessage}
-	<p>{warningMessage}</p>
+	<div
+		class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative mb-4 w-96"
+		role="alert"
+	>
+		<span class="block sm:inline">{warningMessage}</span>
+	</div>
+{/if}
+{#if successMessage}
+	<div
+		class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 w-96"
+		role="alert"
+	>
+		<span class="block sm:inline">{successMessage}</span>
+	</div>
 {/if}

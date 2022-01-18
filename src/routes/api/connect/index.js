@@ -1,12 +1,11 @@
-import { unexpectedError } from '../../../helper/unexpectedError';
-import connectInit from '../../../service/connectInit';
+import { unexpectedError } from 'architected-client/helper/unexpectedError';
+import { connectService } from '../../../service/setup';
 import dotenv from 'dotenv';
 export async function post(request) {
 	try {
 		dotenv.config();
 
 		console.log('connectService.authorize:connectInit:start');
-		const connectService = connectInit();
 		const authorizeResponse = await connectService.authorize(request.body);
 		console.log('connectService.authorize:finish');
 

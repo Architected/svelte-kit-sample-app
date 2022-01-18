@@ -1,13 +1,13 @@
-import backChannelService from '../../../service/backChannelService';
-import { unexpectedError } from '../../../helper/unexpectedError';
+import { contentService } from '../../../service/setup';
+import { unexpectedError } from 'architected-client/helper/unexpectedError';
 import dotenv from 'dotenv';
+
 export async function get({ params }) {
 	try {
 		dotenv.config();
 
 		console.log('contentService.getPageByKey:start');
-		const responseData = await backChannelService().content().getPageByKey(params.key);
-		const { data } = responseData;
+		const { data } = await contentService.getPageByKey(params.key);
 		console.log('contentService.getPageByKey:finish');
 
 		return {
@@ -15,7 +15,7 @@ export async function get({ params }) {
 			body: data
 		};
 	} catch (err) {
-		console.log('error calling contentService.getPageByKey');
+		console.log(err);
 		return {
 			status: 500,
 			body: unexpectedError(err)

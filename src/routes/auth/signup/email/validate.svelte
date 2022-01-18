@@ -1,8 +1,8 @@
 <script>
 	import { urlConstants } from '../../../../helper/urlConstants';
-	import { AuthStore, authDispatch } from '../../../../store/authStore.js';
+	import { AuthStore, authDispatch } from '../../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { verifyEmailAction, validateEmailAction } from '../../../../store/actions/signInActions';
+	import { iamService } from '../../../../service/setup';
 	import EmailSignUpValidate from '../../../../components/auth/emailSignUpValidate.svelte';
 	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../../helper/storageHelper';
@@ -22,7 +22,7 @@
 
 	const submitHandler = async ({ code }) => {
 		if (!resendInProgress) {
-			const responseData = await validateEmailAction(
+			const responseData = await iamService.signUpValidateEmail(
 				code,
 				$AuthStore.bearerToken.tokenValue,
 				authDispatch
@@ -36,7 +36,7 @@
 
 	const resendHandler = async () => {
 		resendInProgress = true;
-		await verifyEmailAction($AuthStore.bearerToken.tokenValue, dispatch);
+		await iamService.signUpVerifyEmail($AuthStore.bearerToken.tokenValue, dispatch);
 		resendInProgress = false;
 	};
 </script>

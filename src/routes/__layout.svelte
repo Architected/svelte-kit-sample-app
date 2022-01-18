@@ -1,7 +1,7 @@
 <script>
 	import TopNav from '../components/layout/topNav.svelte';
 	import Footer from '../components/layout/footer.svelte';
-	import { AuthStore } from '../store/authStore.js';
+	import { AuthStore } from '../store/architectedStore.js';
 	import LeftNav from '../components/layout/leftNav.svelte';
 </script>
 

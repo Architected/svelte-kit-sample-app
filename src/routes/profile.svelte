@@ -1,14 +1,56 @@
-<div class="w-full overflow-x-hidden flex flex-col">
-	<main class="w-full flex-grow p-6">
-		<div class="flex justify-between">
-			<div class="flex space-x-4">
-				<h2 class="font-bold text-3xl mt-1 px-2 mb-5">Profile</h2>
-			</div>
-			<div class="flex items-center space-x-1" />
+<script>
+	import { hasCompleteToken } from '../helper/storageHelper';
+	import {
+		AuthStore,
+		authDispatch,
+		ProfileStore,
+		profileDispatch
+	} from '../store/architectedStore';
+	import { goto } from '$app/navigation';
+	import { urlConstants } from '../helper/urlConstants';
+	import { onMount } from 'svelte';
+	import ProfileContainer from '../components/profile/profileContainer.svelte';
+	import { profileService } from '../service/setup';
+
+	onMount(() => {
+		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
+			goto(urlConstants.get('SIGNOUT'), true);
+		}
+	});
+
+	const loadProfile = async () => {
+		await profileService.getProfile(profileDispatch, $AuthStore.bearerToken.tokenValue);
+	};
+
+	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
+		loadProfile().then(() => {});
+	}
+
+	const updateProfileHandler = async (data) => {
+		const updatedProfile = { ...$ProfileStore.profile, ...data };
+		await profileService.saveProfile(
+			updatedProfile,
+			profileDispatch,
+			$AuthStore.bearerToken.tokenValue
+		);
+	};
+</script>
+
+<div class="w-full flex flex-col px-5">
+	<div class="w-full flex flex-row justify-between p-5">
+		<div class="flex space-x-4">
+			<h2 class="font-bold text-3xl">My Profile</h2>
 		</div>
-		<div>
-			<p class="px-2">Todo: Retrieve profile</p>
-			<p class="px-2">Todo: Update profile</p>
+		<div class="flex">
+			<div class="mt-2">&nbsp;</div>
 		</div>
-	</main>
+	</div>
+	<ProfileContainer
+		profile={$ProfileStore.profile}
+		isLoadingItem={$ProfileStore.isLoadingItem}
+		loadingError={$ProfileStore.loadingError}
+		updateProfile={updateProfileHandler}
+		isUpdatingItem={$ProfileStore.isUpdatingItem}
+		updatingError={$ProfileStore.updatingError}
+	/>
 </div>

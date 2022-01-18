@@ -2,8 +2,6 @@
 	import Fa from 'svelte-fa';
 	import { faFolder } from '@fortawesome/free-solid-svg-icons';
 	import { page } from '$app/stores';
-
-	console.log($page.url.pathname.indexOf('file'));
 </script>
 
 <aside class="border-r-2 border-gray-100 relative h-screen w-72 md:w-64 hidden md:block shadow-xl'">
