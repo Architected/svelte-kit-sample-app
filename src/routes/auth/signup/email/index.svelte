@@ -18,7 +18,6 @@
 	const submitHandler = async ({ email, password }) => {
 		const clientDetails = await getClientDetails();
 		const requestData = { email, password };
-		console.log(iamService);
 		const responseData = await iamService.signUp(requestData, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError) {

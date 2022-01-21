@@ -39,6 +39,9 @@
 				contextMenu.classList.toggle('hidden');
 			});
 		}
+
+		console.log('$AuthStore.authState:' + $AuthStore.authState);
+		console.log('$AuthStore.isAuthFlow:' + $AuthStore.isAuthFlow);
 	});
 </script>
 

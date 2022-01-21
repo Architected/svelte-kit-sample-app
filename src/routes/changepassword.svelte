@@ -25,9 +25,6 @@
 			profileDispatch,
 			$AuthStore.bearerToken.tokenValue
 		);
-
-		if (responseData.inError) {
-		}
 	};
 </script>
 

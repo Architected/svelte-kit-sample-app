@@ -57,7 +57,7 @@
 
 		currentFile = e.target.files[0];
 		previewUrl = URL.createObjectURL(file);
-		console.log('previewUrl' + previewUrl);
+
 		fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: previewUrl });
 	};
 
@@ -76,9 +76,6 @@
 		fileService.uploadFile(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
 			fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
 			resetFileInput();
-			// var fileInput = root.reloadHandler().then(() => {
-			// 	console.log('files reloaded after update');
-			// });
 
 			reloadHandler().then(() => {});
 		});
