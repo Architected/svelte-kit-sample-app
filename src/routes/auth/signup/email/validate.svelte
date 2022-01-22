@@ -2,7 +2,7 @@
 	import { urlConstants } from '../../../../helper/urlConstants';
 	import { AuthStore, authDispatch } from '../../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { iamService } from '../../../../service/setup';
+	import { iamClient } from '../../../../service/setup';
 	import EmailSignUpValidate from '../../../../components/auth/emailSignUpValidate.svelte';
 	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../../helper/storageHelper';
@@ -22,7 +22,7 @@
 
 	const submitHandler = async ({ code }) => {
 		if (!resendInProgress) {
-			const responseData = await iamService.signUpValidateEmail(
+			const responseData = await iamClient.signUpValidateEmail(
 				code,
 				$AuthStore.bearerToken.tokenValue,
 				authDispatch
@@ -36,7 +36,7 @@
 
 	const resendHandler = async () => {
 		resendInProgress = true;
-		await iamService.signUpVerifyEmail($AuthStore.bearerToken.tokenValue, dispatch);
+		await iamClient.signUpVerifyEmail($AuthStore.bearerToken.tokenValue, dispatch);
 		resendInProgress = false;
 	};
 </script>

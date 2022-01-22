@@ -4,7 +4,7 @@
 	import { nextStep } from '../../../../helper/scopeHelper';
 	import { saveToStore, hasCompleteToken } from '../../../../helper/storageHelper';
 	import { AuthStore, authDispatch } from '../../../../store/architectedStore.js';
-	import { iamService } from '../../../../service/setup';
+	import { iamClient } from '../../../../service/setup';
 	import EmailSignIn from '../../../../components/auth/emailSignIn.svelte';
 	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { goto } from '$app/navigation';
@@ -19,7 +19,7 @@
 	const submitHandler = async ({ email, password }) => {
 		const clientDetails = await getClientDetails();
 		const requestData = { email, password };
-		const responseData = await iamService.signIn(requestData, clientDetails, authDispatch);
+		const responseData = await iamClient.signIn(requestData, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError) {
 			saveToStore('_tokenWrapper', responseData.tokenWrapper);

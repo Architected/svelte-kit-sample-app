@@ -8,15 +8,15 @@
 	//import FileUploadModal from '../../components/file/fileUploadModal.svelte';
 	import FileListHeader from '../../components/file/fileListHeader.svelte';
 	import FileListGrid from '../../components/file/fileListGrid.svelte';
-	import * as fileActionType from 'architected-client/constants/file.js';
-	import { fileService } from '../../service/setup';
+	import * as fileActionType from 'architected-client/app-state/constants/file.js';
+	import { fileClient } from '../../service/setup';
 	import ModalContainer from '../../components/layout/modalContainer.svelte';
 	//import FileUpload from '../../components/file/fileUpload.svelte';
 	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import AuthButton from '../../components/fields/authButton.svelte';
 
 	const reloadHandler = async () => {
-		await fileService.getAllFiles(fileDispatch, $AuthStore.bearerToken.tokenValue);
+		await fileClient.getAllFiles(fileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	onMount(() => {
@@ -51,7 +51,7 @@
 
 		const fileSize = file.size;
 		const fileType = file.type;
-		const validFile = fileService.validateFileBasic(fileSize, fileType, fileDispatch);
+		const validFile = fileClient.validateFileBasic(fileSize, fileType, fileDispatch);
 
 		if (!validFile) return;
 
@@ -73,7 +73,7 @@
 			file: currentFile
 		};
 
-		fileService.uploadFile(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
+		fileClient.uploadFile(data, fileDispatch, $AuthStore.bearerToken.tokenValue).then(() => {
 			fileDispatch({ type: fileActionType.UPDATE_PREVIEW_URL, payload: null });
 			resetFileInput();
 
@@ -83,7 +83,7 @@
 
 	const downloadFileHandler = async (fileGlobalId, fileName) => {
 		console.log('fileGlobalId' + fileGlobalId);
-		return fileService.downloadFile(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
+		return fileClient.downloadFile(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {

@@ -2,7 +2,7 @@
 	import { urlConstants } from '../../../helper/urlConstants';
 	import { AuthStore, authDispatch } from '../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { iamService } from '../../../service/setup';
+	import { iamClient } from '../../../service/setup';
 	import PasswordResetPerform from '../../../components/auth/passwordResetPerform.svelte';
 	import AuthLayoutContainer from '../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../helper/storageHelper';
@@ -19,7 +19,7 @@
 	});
 
 	const submitHandler = async ({ newPassword, confirmPassword }) => {
-		const responseData = await iamService.passwordResetPerform(
+		const responseData = await iamClient.passwordResetPerform(
 			newPassword,
 			confirmPassword,
 			authDispatch,

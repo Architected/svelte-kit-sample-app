@@ -10,7 +10,7 @@
 	import { urlConstants } from '../helper/urlConstants';
 	import { onMount } from 'svelte';
 	import ProfileContainer from '../components/profile/profileContainer.svelte';
-	import { profileService } from '../service/setup';
+	import { profileClient } from '../service/setup';
 
 	onMount(() => {
 		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
@@ -19,7 +19,7 @@
 	});
 
 	const loadProfile = async () => {
-		await profileService.getProfile(profileDispatch, $AuthStore.bearerToken.tokenValue);
+		await profileClient.getProfile(profileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
@@ -28,7 +28,7 @@
 
 	const updateProfileHandler = async (data) => {
 		const updatedProfile = { ...$ProfileStore.profile, ...data };
-		await profileService.saveProfile(
+		await profileClient.saveProfile(
 			updatedProfile,
 			profileDispatch,
 			$AuthStore.bearerToken.tokenValue

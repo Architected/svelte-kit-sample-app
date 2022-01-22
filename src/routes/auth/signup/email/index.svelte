@@ -3,7 +3,7 @@
 	import { urlConstants } from '../../../../helper/urlConstants';
 	import { AuthStore, authDispatch } from '../../../../store/architectedStore.js';
 	import { goto } from '$app/navigation';
-	import { iamService } from '../../../../service/setup';
+	import { iamClient } from '../../../../service/setup';
 	import EmailSignUp from '../../../../components/auth/emailSignUp.svelte';
 	import AuthLayoutContainer from '../../../../components/layout/authLayoutContainer.svelte';
 	import { hasCompleteToken } from '../../../../helper/storageHelper';
@@ -18,7 +18,7 @@
 	const submitHandler = async ({ email, password }) => {
 		const clientDetails = await getClientDetails();
 		const requestData = { email, password };
-		const responseData = await iamService.signUp(requestData, clientDetails, authDispatch);
+		const responseData = await iamClient.signUp(requestData, clientDetails, authDispatch);
 
 		if (responseData && !responseData.inError) {
 			if (responseData.tokenWrapper.authState.signupScope === 'FULL') {

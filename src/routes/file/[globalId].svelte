@@ -15,7 +15,7 @@
 	import FileDetailContainer from '../../components/file/fileDetailContainer.svelte';
 
 	import { onMount } from 'svelte';
-	import { fileService } from '../../service/setup';
+	import { fileClient } from '../../service/setup';
 
 	export let fileId;
 
@@ -26,11 +26,11 @@
 	});
 
 	const retrieveData = async () => {
-		await fileService.getFile(fileId, fileDispatch, $AuthStore.bearerToken.tokenValue);
+		await fileClient.getFile(fileId, fileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	const deleteFileHandler = async () => {
-		const response = await fileService.deleteFile(
+		const response = await fileClient.deleteFile(
 			$FileStore.file.globalId,
 			fileDispatch,
 			$AuthStore.bearerToken.tokenValue
@@ -49,7 +49,7 @@
 			description: data.description
 		};
 
-		const response = await fileService.updateFile(
+		const response = await fileClient.updateFile(
 			fileUpdateRequest,
 			fileDispatch,
 			$AuthStore.bearerToken.tokenValue

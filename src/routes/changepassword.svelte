@@ -10,7 +10,7 @@
 	import { urlConstants } from '../helper/urlConstants';
 	import { onMount } from 'svelte';
 	import AccountContainer from '../components/account/accountContainer.svelte';
-	import { profileService } from '../service/setup';
+	import { profileClient } from '../service/setup';
 
 	onMount(() => {
 		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
@@ -19,7 +19,7 @@
 	});
 
 	const changePasswordHandler = async (data) => {
-		const responseData = await profileService.changePassword(
+		const responseData = await profileClient.changePassword(
 			data.currentPassword,
 			data.newPassword,
 			profileDispatch,
