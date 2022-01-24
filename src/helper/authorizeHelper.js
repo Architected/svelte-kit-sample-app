@@ -12,10 +12,23 @@ const startAuthorize = async (codeVerifier, clientDetails) => {
 	console.log('pre-connect call');
 	let response;
 	try {
-		response = await axios.post('/api/connect', request, {
+		response = await fetch('/api/connect', {
+			method: 'POST',
+			body: JSON.stringify(request),
+			headers: {
+				'content-type': 'application/json'
+			},
 			timeout: 30000
 		});
-		console.log('post-connect call');
+
+		const data = await response.json();
+
+		console.log('data:' + JSON.stringify(data));
+		return {
+			status: data.status || 200,
+			props: data,
+			data: data
+		};
 	} catch (e) {
 		console.log(e);
 		console.log('error-connect call');
