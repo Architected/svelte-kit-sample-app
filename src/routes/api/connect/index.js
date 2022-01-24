@@ -11,7 +11,7 @@ export async function post(request) {
 
 		return {
 			status: 200,
-			body: authorizeResponse.data
+			body: authorizeResponse != null ? authorizeResponse.data : null
 		};
 	} catch (err) {
 		console.log('error calling connectClient.authorize');

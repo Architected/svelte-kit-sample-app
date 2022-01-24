@@ -9,29 +9,32 @@ const startAuthorize = async (codeVerifier, clientDetails) => {
 		userAgent: userAgent
 	};
 
-	console.log('pre-connect call');
 	let response;
+
 	try {
-		response = await fetch('/api/connect', {
-			method: 'POST',
-			body: JSON.stringify(request),
+		response = await axios.post('/api/connect', request, {
+			timeout: 30000,
 			headers: {
-				'content-type': 'application/json'
-			},
-			timeout: 30000
+				'Content-Type': 'application/json'
+			}
 		});
-
-		const data = await response.json();
-
-		console.log('data:' + JSON.stringify(data));
-		return {
-			status: data.status || 200,
-			props: data,
-			data: data
-		};
-	} catch (e) {
-		console.log(e);
-		console.log('error-connect call');
+	} catch (error) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			console.log(error.response.data);
+			console.log(error.response.status);
+			console.log(error.response.headers);
+		} else if (error.request) {
+			// The request was made but no response was received
+			// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+			// http.ClientRequest in node.js
+			console.log(error.request);
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			console.log('Error', error.message);
+		}
+		console.log(error.config);
 	}
 
 	return response;
