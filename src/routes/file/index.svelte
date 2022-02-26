@@ -15,10 +15,6 @@
 	import MessagePanel from '../../components/fields/messagePanel.svelte';
 	import AuthButton from '../../components/fields/authButton.svelte';
 
-	const reloadHandler = async () => {
-		await fileClient.getAllFiles(fileDispatch, $AuthStore.bearerToken.tokenValue);
-	};
-
 	onMount(() => {
 		if (!hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
 			goto(urlConstants.get('SIGNOUT'), true);
@@ -82,8 +78,11 @@
 	};
 
 	const downloadFileHandler = async (fileGlobalId, fileName) => {
-		console.log('fileGlobalId' + fileGlobalId);
 		return fileClient.downloadFile(fileGlobalId, fileName, $AuthStore.bearerToken.tokenValue);
+	};
+
+	const reloadHandler = async () => {
+		await fileClient.getAllFiles(fileDispatch, $AuthStore.bearerToken.tokenValue);
 	};
 
 	if (hasCompleteToken($AuthStore.authState, $AuthStore.bearerToken, authDispatch)) {
